@@ -6,6 +6,6 @@ import com.univesp.dce.apigerenciadordce.domain.model.Eixo;
 
 
 @Repository
-public interface EixoRepository extends JpaRepository<Eixoo, Long>{
+public interface EixoRepository extends JpaRepository<Eixo, Long>{
     
 }
