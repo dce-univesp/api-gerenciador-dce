@@ -32,19 +32,20 @@ public class RegiaoController {
 
 	@Autowired
 	private RegiaoInputOutputConverter regiaoInputOutputConverter;
-	@GetMapping("/listar")
+
+	@GetMapping
 	public List<RegiaoOutput> listar() {
 		List<Regiao> listaregioes = regiaoRepository.findAll();
 		return regiaoInputOutputConverter.convertDomainListToOutputList(listaregioes);
 	}
 
-	@GetMapping("/buscar/{regiaoId}")
+	@GetMapping("/{regiaoId}")
 	public RegiaoOutput buscar(@PathVariable Long regiaoId) {
 		Regiao regiao = cadastroRegiaoService.buscarOuFalhar(regiaoId);
 		return regiaoInputOutputConverter.convertDomainToOutput(regiao);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public RegiaoOutput adicionar(@RequestBody /* @Valid */ RegiaoInput regiaoInput) {
 		Regiao regiao = regiaoInputOutputConverter.convertInputToDomain(regiaoInput);
@@ -52,7 +53,7 @@ public class RegiaoController {
 		return regiaoInputOutputConverter.convertDomainToOutput(regiao);
 	}
 
-	@PutMapping("/atualizar/{regiaoId}")
+	@PutMapping("/{regiaoId}")
 	public RegiaoOutput atualizar(@PathVariable Long regiaoId, @RequestBody /* @Valid */ RegiaoInput regiaoInput) {
 		Regiao regiaoAtual = cadastroRegiaoService.buscarOuFalhar(regiaoId);
 		regiaoInputOutputConverter.copyInputToDomain(regiaoInput, regiaoAtual);
@@ -60,7 +61,7 @@ public class RegiaoController {
 		return regiaoInputOutputConverter.convertDomainToOutput(regiaoAtual);
 	}
 
-	@DeleteMapping("/excluir/{regiaoId}")
+	@DeleteMapping("/{regiaoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluirregiao(@PathVariable Long regiaoId) {
 		cadastroRegiaoService.excluir(regiaoId);

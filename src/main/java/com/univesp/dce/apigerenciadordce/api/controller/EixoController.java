@@ -32,19 +32,19 @@ public class EixoController {
 	@Autowired
 	private EixoInputOutputConverter eixoInputOutputConverter;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<EixoOutput> listar() {
 		List<Eixo> listaeixos = eixoRepository.findAll();
 		return eixoInputOutputConverter.convertDomainListToOutputList(listaeixos);
 	}
 
-	@GetMapping("/buscar/{eixoId}")
+	@GetMapping("/{eixoId}")
 	public EixoOutput buscar(@PathVariable Long eixoId) {
 		Eixo eixo = cadastroEixoService.buscarOuFalhar(eixoId);
 		return eixoInputOutputConverter.convertDomainToOutput(eixo);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public EixoOutput adicionar(@RequestBody /* @Valid */ EixoInput eixoInput) {
 		Eixo eixo = eixoInputOutputConverter.convertInputToDomain(eixoInput);
@@ -52,7 +52,7 @@ public class EixoController {
 		return eixoInputOutputConverter.convertDomainToOutput(eixo);
 	}
 
-	@PutMapping("/atualizar/{eixoId}")
+	@PutMapping("/eixoId}")
 	public EixoOutput atualizar(@PathVariable Long eixoId, @RequestBody /* @Valid */ EixoInput eixoInput) {
 		Eixo eixoAtual = cadastroEixoService.buscarOuFalhar(eixoId);
 		eixoInputOutputConverter.copyInputToDomain(eixoInput, eixoAtual);
@@ -60,7 +60,7 @@ public class EixoController {
 		return eixoInputOutputConverter.convertDomainToOutput(eixoAtual);
 	}
 
-	@DeleteMapping("/excluir/{eixoId}")
+	@DeleteMapping("/{eixoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluireixo(@PathVariable Long eixoId) {
 		cadastroEixoService.excluir(eixoId);

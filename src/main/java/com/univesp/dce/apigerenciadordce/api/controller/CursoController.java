@@ -32,19 +32,19 @@ public class CursoController {
 	@Autowired
 	private CursoInputOutputConverter cursoInputOutputConverter;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<CursoOutput> listar() {
 		List<Curso> listacursos = cursoRepository.findAll();
 		return cursoInputOutputConverter.convertDomainListToOutputList(listacursos);
 	}
 
-	@GetMapping("/buscar/{cursoId}")
+	@GetMapping("/{cursoId}")
 	public CursoOutput buscar(@PathVariable Long cursoId) {
 		Curso curso = cadastroCursoService.buscarOuFalhar(cursoId);
 		return cursoInputOutputConverter.convertDomainToOutput(curso);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CursoOutput adicionar(@RequestBody /* @Valid */ CursoInput cursoInput) {
 		Curso curso = cursoInputOutputConverter.convertInputToDomain(cursoInput);
@@ -52,7 +52,7 @@ public class CursoController {
 		return cursoInputOutputConverter.convertDomainToOutput(curso);
 	}
 
-	@PutMapping("/atualizar/{cursoId}")
+	@PutMapping("/{cursoId}")
 	public CursoOutput atualizar(@PathVariable Long cursoId, @RequestBody /* @Valid */ CursoInput cursoInput) {
 		Curso cursoAtual = cadastroCursoService.buscarOuFalhar(cursoId);
 		cursoInputOutputConverter.copyInputToDomain(cursoInput, cursoAtual);
@@ -60,7 +60,7 @@ public class CursoController {
 		return cursoInputOutputConverter.convertDomainToOutput(cursoAtual);
 	}
 
-	@DeleteMapping("/excluir/{cursoId}")
+	@DeleteMapping("/{cursoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluircurso(@PathVariable Long cursoId) {
 		cadastroCursoService.excluir(cursoId);

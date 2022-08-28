@@ -34,19 +34,19 @@ public class CidadeController {
 	@Autowired
 	private CidadeInputOutputConverter cidadeInputOutputConverter;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<CidadeOutput> listar() {
 		List<Cidade> listaCidades = cidadeRepository.findAll();
 		return cidadeInputOutputConverter.convertDomainListToOutputList(listaCidades);
 	}
 
-	@GetMapping("/buscar/{cidadeId}")
+	@GetMapping("/{cidadeId}")
 	public CidadeOutput buscar(@PathVariable Long cidadeId) {
 		Cidade cidade = cadastroCidadeService.buscarOuFalhar(cidadeId);
 		return cidadeInputOutputConverter.convertDomainToOutput(cidade);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CidadeOutput adicionar(@RequestBody /* @Valid */ CidadeInput cidadeInput) {
 		Cidade cidade = cidadeInputOutputConverter.convertInputToDomain(cidadeInput);
@@ -54,7 +54,7 @@ public class CidadeController {
 		return cidadeInputOutputConverter.convertDomainToOutput(cidade);
 	}
 
-	@PutMapping("/atualizar/{cidadeId}")
+	@PutMapping("/{cidadeId}")
 	public CidadeOutput atualizar(@PathVariable Long cidadeId, @RequestBody /* @Valid */ CidadeInput cidadeInput) {
 		Cidade cidadeAtual = cadastroCidadeService.buscarOuFalhar(cidadeId);
 		cidadeInputOutputConverter.copyInputToDomain(cidadeInput, cidadeAtual);
@@ -62,7 +62,7 @@ public class CidadeController {
 		return cidadeInputOutputConverter.convertDomainToOutput(cidadeAtual);
 	}
 
-	@DeleteMapping("/excluir/{cidadeId}")
+	@DeleteMapping("/{cidadeId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluirCidade(@PathVariable Long cidadeId) {
 		cadastroCidadeService.excluir(cidadeId);

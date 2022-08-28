@@ -36,19 +36,19 @@ public class CargoController {
 	@Autowired
 	private CargoInputOutputConverter cargoInputOutputConverter;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<CargoOutput> listar() {
 		List<Cargo> listaCargos = cargoRepository.findAll();
 		return cargoInputOutputConverter.convertDomainListToOutputList(listaCargos);
 	}
 
-	@GetMapping("/buscar/{cargoId}")
+	@GetMapping("/{cargoId}")
 	public CargoOutput buscar(@PathVariable Long cargoId) {
 		Cargo Cargo = cadastroCargoService.buscarOuFalhar(cargoId);
 		return cargoInputOutputConverter.convertDomainToOutput(Cargo);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public CargoOutput adicionar(@RequestBody /* @Valid */ CargoInput cargoInput) {
 		Cargo cargo = cargoInputOutputConverter.convertInputToDomain(cargoInput);
@@ -56,7 +56,7 @@ public class CargoController {
 		return cargoInputOutputConverter.convertDomainToOutput(cargo);
 	}
 
-	@PutMapping("/atualizar/{cargoId}")
+	@PutMapping("/{cargoId}")
 	public CargoOutput atualizar(@PathVariable Long cargoId, @RequestBody /* @Valid */ CargoInput cargoInput) {
 		Cargo cargoAtual = cadastroCargoService.buscarOuFalhar(cargoId);
 		cargoInputOutputConverter.copyInputToDomain(cargoInput, cargoAtual);
@@ -64,7 +64,7 @@ public class CargoController {
 		return cargoInputOutputConverter.convertDomainToOutput(cargoAtual);
 	}
 
-	@DeleteMapping("/excluir/{cargoId}")
+	@DeleteMapping("/{cargoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluirCargo(@PathVariable Long cargoId) {
 		cadastroCargoService.excluir(cargoId);

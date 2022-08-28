@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.univesp.dce.apigerenciadordce.api.converter.DiretoriaInputOutputConverter;
-import com.univesp.dce.apigerenciadordce.api.converter.PermissaoInputOutputConverter;
 import com.univesp.dce.apigerenciadordce.api.model.input.DiretoriaInput;
 import com.univesp.dce.apigerenciadordce.api.model.output.DiretoriaOutput;
 import com.univesp.dce.apigerenciadordce.domain.model.Diretoria;
-import com.univesp.dce.apigerenciadordce.domain.model.GrupoUsuario;
 import com.univesp.dce.apigerenciadordce.domain.repository.DiretoriaRepository;
 import com.univesp.dce.apigerenciadordce.domain.service.CadastroDiretoriaService;
-import com.univesp.dce.apigerenciadordce.domain.service.CadastroGrupoUsuarioService;
+
 
 @RestController
 @RequestMapping(value = "/diretoria")
@@ -35,19 +33,19 @@ public class DiretoriaController {
 	@Autowired
 	private DiretoriaInputOutputConverter diretoriaInputOutputConverter;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<DiretoriaOutput> listar() {
 		List<Diretoria> listadiretorias = diretoriaRepository.findAll();
 		return diretoriaInputOutputConverter.convertDomainListToOutputList(listadiretorias);
 	}
 
-	@GetMapping("/buscar/{diretoriaId}")
+	@GetMapping("/{diretoriaId}")
 	public DiretoriaOutput buscar(@PathVariable Long diretoriaId) {
 		Diretoria diretoria = cadastroDiretoriaService.buscarOuFalhar(diretoriaId);
 		return diretoriaInputOutputConverter.convertDomainToOutput(diretoria);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public DiretoriaOutput adicionar(@RequestBody /* @Valid */ DiretoriaInput diretoriaInput) {
 		Diretoria diretoria = diretoriaInputOutputConverter.convertInputToDomain(diretoriaInput);
@@ -55,7 +53,7 @@ public class DiretoriaController {
 		return diretoriaInputOutputConverter.convertDomainToOutput(diretoria);
 	}
 
-	@PutMapping("/atualizar/{diretoriaId}")
+	@PutMapping("/{diretoriaId}")
 	public DiretoriaOutput atualizar(@PathVariable Long diretoriaId, @RequestBody /* @Valid */ DiretoriaInput diretoriaInput) {
 		Diretoria diretoriaAtual = cadastroDiretoriaService.buscarOuFalhar(diretoriaId);
 		diretoriaInputOutputConverter.copyInputToDomain(diretoriaInput, diretoriaAtual);
@@ -63,7 +61,7 @@ public class DiretoriaController {
 		return diretoriaInputOutputConverter.convertDomainToOutput(diretoriaAtual);
 	}
 
-	@DeleteMapping("/excluir/{diretoriaId}")
+	@DeleteMapping("/{diretoriaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluirdiretoria(@PathVariable Long diretoriaId) {
 		cadastroDiretoriaService.excluir(diretoriaId);

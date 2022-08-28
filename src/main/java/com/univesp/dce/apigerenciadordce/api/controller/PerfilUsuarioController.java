@@ -36,20 +36,20 @@ public class PerfilUsuarioController {
 	private PerfilUsuarioInputOutputConverter perfilUsuarioInputOutputConverter;
 
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<PerfilUsuarioOutput> listar() {
 		List<PerfilUsuario> listaPerfilUsuarios = perfilUsuarioRepository.findAll();
 		return perfilUsuarioInputOutputConverter.convertDomainListToOutputList(listaPerfilUsuarios);
 	}
 
 	
-	@GetMapping("/buscar/{usuarioId}")
+	@GetMapping("/{usuarioId}")
 	public PerfilUsuarioOutput buscar(@PathVariable Long usuarioId) {
 		PerfilUsuario perfilUsuario = cadastroPerfilUsuarioService.buscarOuFalhar(usuarioId);		
 		return perfilUsuarioInputOutputConverter.convertDomainToOutput(perfilUsuario);
 	}
 	
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public PerfilUsuarioOutput adicionar(@RequestBody /*@Valid*/ PerfilUsuarioComSenhaInput usuarioInput) {
 		PerfilUsuario perfilUsuario = perfilUsuarioInputOutputConverter.convertInputToDomain(usuarioInput);
@@ -66,7 +66,7 @@ public class PerfilUsuarioController {
 		return perfilUsuarioInputOutputConverter.convertDomainToOutput(perfilUsuarioAtual);
 	}
 
-	@DeleteMapping("/excluir/{usuarioId}")
+	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void excluirPerfil(@PathVariable Long usuarioId) {
 		cadastroPerfilUsuarioService.excluir(usuarioId);

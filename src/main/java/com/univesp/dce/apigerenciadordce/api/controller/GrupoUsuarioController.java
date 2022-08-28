@@ -39,13 +39,13 @@ public class GrupoUsuarioController {
 	private GrupoUsuarioInputOutputConverter grupoUsuarioInputOutputConverter;
 	
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<GrupoUsuarioOutput> listar() {
 		List<GrupoUsuario> listaUsuarios = cadastroGrupoUsuarioService.listar();
 		return grupoUsuarioInputOutputConverter.convertDomainListToOutputList(listaUsuarios);
 	}
 
- 	@GetMapping("/buscar")
+ 	@GetMapping("/{usuarioId}")
 	public List<GrupoUsuarioOutput> buscar(@PathVariable Long usuarioId) {
 		PerfilUsuario perfilUsuario = cadastroPerfilUsuario.buscarOuFalhar(usuarioId);
 		return grupoUsuarioInputOutputConverter.convertDomainListToOutputList(perfilUsuario.getGrupos());

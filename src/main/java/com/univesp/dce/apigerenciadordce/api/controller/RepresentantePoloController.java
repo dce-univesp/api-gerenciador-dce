@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,6 @@ import com.univesp.dce.apigerenciadordce.domain.model.RepresentantePolo;
 import com.univesp.dce.apigerenciadordce.domain.repository.RepresentantePoloRepository;
 import com.univesp.dce.apigerenciadordce.domain.service.CadastroRepresentantePoloService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping(value = "/representantePolo")
@@ -32,19 +32,19 @@ public class RepresentantePoloController {
 	@Autowired
 	private RepresentantePoloInputOutputConverter representantePoloInputOutputConverter;
 
-	@GetMapping("/listar")
+	@GetMapping
 	public List<RepresentantePoloOutput> listar() {
 		List<RepresentantePolo> listarepresentantePolos = representantePoloRepository.findAll();
 		return representantePoloInputOutputConverter.convertDomainListToOutputList(listarepresentantePolos);
 	}
 
-	@GetMapping("/buscar/{representantePoloId}")
+	@GetMapping("/{representantePoloId}")
 	public RepresentantePoloOutput buscar(@PathVariable Long representantePoloId) {
 		RepresentantePolo representantePolo = cadastroRepresentantePoloService.buscarOuFalhar(representantePoloId);
 		return representantePoloInputOutputConverter.convertDomainToOutput(representantePolo);
 	}
 
-	@PostMapping("/cadastrar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public RepresentantePoloOutput adicionar(@RequestBody /* @Valid */ RepresentantePoloInput representantePoloInput) {
 		RepresentantePolo representantePolo = representantePoloInputOutputConverter.convertInputToDomain(representantePoloInput);
@@ -52,7 +52,7 @@ public class RepresentantePoloController {
 		return representantePoloInputOutputConverter.convertDomainToOutput(representantePolo);
 	}
 
-	@PutMapping("/atualizar/{representantePoloId}")
+	@PutMapping("/{representantePoloId}")
 	public RepresentantePoloOutput atualizar(@PathVariable Long representantePoloId, @RequestBody /* @Valid */ RepresentantePoloInput representantePoloInput) {
 		RepresentantePolo representantePoloAtual = cadastroRepresentantePoloService.buscarOuFalhar(representantePoloId);
 		representantePoloInputOutputConverter.copyInputToDomain(representantePoloInput, representantePoloAtual);
@@ -60,9 +60,9 @@ public class RepresentantePoloController {
 		return representantePoloInputOutputConverter.convertDomainToOutput(representantePoloAtual);
 	}
 
-	@DeleteMapping("/excluir/{representantePoloId}")
+	@DeleteMapping("/{representantePoloId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void excluirrepresentantePolo(@PathVariable Long representantePoloId) {
+	public void excluirRepresentantePolo(@PathVariable Long representantePoloId) {
 		cadastroRepresentantePoloService.excluir(representantePoloId);
 	}
 }
