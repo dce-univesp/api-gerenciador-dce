@@ -1,19 +1,16 @@
 package com.univesp.dce.apigerenciadordce.domain.model;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "PERFIL_USUARIO")
 public class PerfilUsuario {

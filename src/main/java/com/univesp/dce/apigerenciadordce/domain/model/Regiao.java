@@ -1,8 +1,6 @@
 package com.univesp.dce.apigerenciadordce.domain.model;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -14,8 +12,9 @@ import javax.persistence.Table;
 
 import java.time.OffsetDateTime;
 
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "REGIAO")
 public class Regiao {

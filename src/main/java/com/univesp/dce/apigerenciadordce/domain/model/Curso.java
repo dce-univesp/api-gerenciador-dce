@@ -3,8 +3,7 @@ package com.univesp.dce.apigerenciadordce.domain.model;
 import java.time.OffsetDateTime;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -15,11 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
+
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "CURSO")
 public class Curso {

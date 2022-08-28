@@ -9,9 +9,7 @@ import lombok.Setter;
 @Getter
 public class RegiaoInput {
 
-    @NotBlank
-    private Integer codigo;
-    
+     
     @NotBlank
     private String nome;
     

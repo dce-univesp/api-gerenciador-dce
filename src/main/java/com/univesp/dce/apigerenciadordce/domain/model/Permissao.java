@@ -15,8 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-@Setter
-@Getter
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "PERMISSAO")
 public class Permissao {

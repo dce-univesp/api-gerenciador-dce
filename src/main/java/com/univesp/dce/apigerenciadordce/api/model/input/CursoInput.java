@@ -1,5 +1,9 @@
 package com.univesp.dce.apigerenciadordce.api.model.input;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CursoInput {
     
     private String nome;
@@ -14,6 +18,6 @@ public class CursoInput {
 
     private Boolean ativo;
 
-    private EixoInput eixo;
+    private EixoIdInput eixo;
 
 }

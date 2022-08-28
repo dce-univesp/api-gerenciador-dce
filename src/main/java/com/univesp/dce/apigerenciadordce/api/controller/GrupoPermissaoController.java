@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.univesp.dce.apigerenciadordce.api.assembler.PermissaoModelAssembler;
-import com.univesp.dce.apigerenciadordce.api.model.PermissaoModel;
+import com.univesp.dce.apigerenciadordce.api.converter.PermissaoInputOutputConverter;
+
 import com.univesp.dce.apigerenciadordce.domain.model.GrupoUsuario;
 import com.univesp.dce.apigerenciadordce.domain.service.CadastroGrupoUsuarioService;
 
@@ -22,22 +22,22 @@ public class GrupoPermissaoController {
 
 	@Autowired
 	private CadastroGrupoUsuarioService cadastroGrupoUsuarioService;
-	
+
 	@Autowired
-	private PermissaoModelAssembler permissaoModelAssembler;
-	
+	private PermissaoInputOutputConverter permissaoInputOutputConverter;
+
 	@GetMapping
-	public List<PermissaoModel> listar(@PathVariable Long grupoId) {
-		GrupoUsuario grupoUsuario   = cadastroGrupoUsuarioService.buscarOuFalhar(grupoId);
-		return permissaoModelAssembler.toCollectionModel(grupoUsuario.getPermissoes());
+	public List<com.univesp.dce.apigerenciadordce.api.model.output.PermissaoOutput> listar(@PathVariable Long grupoId) {
+		GrupoUsuario grupoUsuario = cadastroGrupoUsuarioService.buscarOuFalhar(grupoId);
+		return permissaoInputOutputConverter.convertDomainListToOutputList(grupoUsuario.getPermissoes());
 	}
-	
+
 	@DeleteMapping("/{permissaoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void desassociar(@PathVariable Long grupoId, @PathVariable Long permissaoId) {
 		cadastroGrupoUsuarioService.desassociarPermissao(grupoId, permissaoId);
 	}
-	
+
 	@PutMapping("/{permissaoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void associar(@PathVariable Long grupoId, @PathVariable Long permissaoId) {

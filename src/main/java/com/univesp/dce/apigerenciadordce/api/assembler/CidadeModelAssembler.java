@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 
 import com.univesp.dce.apigerenciadordce.api.model.CidadeModel;
 import com.univesp.dce.apigerenciadordce.domain.model.Cidade;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Component
 public class CidadeModelAssembler {
@@ -22,7 +24,8 @@ public class CidadeModelAssembler {
 	
 	public List<CidadeModel> toCollectionModel(List<Cidade> cidades) {
 		return cidades.stream()
-				.map(cidade -> toModel(cidade))
+			//	.map(cidade -> toModel(cidade))
+				.map(this::toModel)
 				.collect(Collectors.toList());
 	}
 	

@@ -3,10 +3,9 @@ package com.univesp.dce.apigerenciadordce.domain.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import java.util.Optional;
 
 @NoRepositoryBean
-public interface CustomJpaRepository<T, ID> extends JpaRepository<T, ID> {
+public interface CustomJpaRepository<T, id> extends JpaRepository<T, id> {
 
     //Optional<T> buscarPrimeiro();
 

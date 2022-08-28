@@ -89,6 +89,7 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
@@ -97,7 +98,7 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
-
+		-->
 		<dependency>
 			<groupId>com.github.bohnman</groupId>
 			<artifactId>squiggly-filter-jackson</artifactId>
@@ -146,6 +147,7 @@
 				<configuration>
 					<source>11</source>
 					<target>11</target>
+					 <argLine>-Dfile.encoding=UTF8</argLine>
 				</configuration>
 			</plugin>
 			<!--

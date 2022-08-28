@@ -1,6 +1,6 @@
 package com.univesp.dce.apigerenciadordce.api.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.univesp.dce.apigerenciadordce.domain.model.TipoRepresentantePolo;
 
@@ -22,6 +22,5 @@ public class RepresentantePoloModel {
     private Date dataInicioMandado;
     
     private Date dataFimMandado;
-    
     
 }

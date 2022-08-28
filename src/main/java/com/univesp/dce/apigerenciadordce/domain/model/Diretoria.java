@@ -11,11 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "DIRETORIA")
 public class Diretoria {

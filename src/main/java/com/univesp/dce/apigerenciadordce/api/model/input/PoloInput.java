@@ -28,7 +28,7 @@ public class PoloInput {
     
     @NotBlank
     @NotNull
-    private CidadeInput cidade;
+    private CidadeIdInput cidade;
     
     @NotBlank
     private Boolean ativo;

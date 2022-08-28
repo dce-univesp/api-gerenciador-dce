@@ -1,8 +1,6 @@
 package com.univesp.dce.apigerenciadordce.domain.model;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -13,13 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import java.time.OffsetDateTime;
 
-@Setter
-@Getter
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "POLO")
 public class Polo {

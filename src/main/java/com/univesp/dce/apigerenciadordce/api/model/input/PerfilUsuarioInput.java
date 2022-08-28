@@ -19,7 +19,7 @@ public class PerfilUsuarioInput {
     private Integer numeroSemestreIngresso;
     private String emailPessoal;
     private String usuarioTelegram;
-    private PoloInput polo;
+    private PoloIdInput polo;
     private String descricaoContato;
     private TipoUsuario tipoUsuario;
     private SituacaoUsuario situacaoUsuario;   

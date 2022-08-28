@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.univesp.dce.apigerenciadordce.api.model.GrupoUsuarioModel;
+
 import com.univesp.dce.apigerenciadordce.api.model.input.GrupoUsuarioInput;
+import com.univesp.dce.apigerenciadordce.api.model.output.GrupoUsuarioOutput;
 import com.univesp.dce.apigerenciadordce.domain.model.GrupoUsuario;
 import com.univesp.dce.apigerenciadordce.domain.model.PerfilUsuario;
 import com.univesp.dce.apigerenciadordce.domain.service.CadastroGrupoUsuarioService;
 import com.univesp.dce.apigerenciadordce.domain.service.CadastroPerfilUsuarioService;
-import com.univesp.dce.apigerenciadordce.api.assembler.GrupoUsuarioInputDisassembler;
-import com.univesp.dce.apigerenciadordce.api.assembler.GrupoUsuarioModelAssembler;
+import com.univesp.dce.apigerenciadordce.api.converter.GrupoUsuarioInputOutputConverter;
 
 @RestController
 @RequestMapping(value = "/grupoUsuario")
@@ -36,32 +36,27 @@ public class GrupoUsuarioController {
 	private CadastroGrupoUsuarioService cadastroGrupoUsuarioService;
 
 	@Autowired
-	private GrupoUsuarioModelAssembler grupoUsuarioModelAssembler;
-	
-	@Autowired
-	private GrupoUsuarioInputDisassembler grupoUsuarioInputDisassembler;
+	private GrupoUsuarioInputOutputConverter grupoUsuarioInputOutputConverter;
 	
 
 	@GetMapping("/listar")
-	public List<GrupoUsuarioModel> listar() {
+	public List<GrupoUsuarioOutput> listar() {
 		List<GrupoUsuario> listaUsuarios = cadastroGrupoUsuarioService.listar();
-		
-		return grupoUsuarioModelAssembler.toCollectionModel(listaUsuarios);
+		return grupoUsuarioInputOutputConverter.convertDomainListToOutputList(listaUsuarios);
 	}
-		
-	@GetMapping("/buscar")
-	public List<GrupoUsuarioModel> buscar(@PathVariable Long usuarioId) {
+
+ 	@GetMapping("/buscar")
+	public List<GrupoUsuarioOutput> buscar(@PathVariable Long usuarioId) {
 		PerfilUsuario perfilUsuario = cadastroPerfilUsuario.buscarOuFalhar(usuarioId);
-		
-		return grupoUsuarioModelAssembler.toCollectionModel(perfilUsuario.getGrupos());
+		return grupoUsuarioInputOutputConverter.convertDomainListToOutputList(perfilUsuario.getGrupos());
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public GrupoUsuarioModel adicionar(@RequestBody @Valid GrupoUsuarioInput grupoUsuarioInput ){
-		GrupoUsuario grupoUsuario = grupoUsuarioInputDisassembler.toDomainObject(grupoUsuarioInput);
+	public GrupoUsuarioOutput adicionar(@RequestBody @Valid GrupoUsuarioInput grupoUsuarioInput ){
+		GrupoUsuario grupoUsuario = grupoUsuarioInputOutputConverter.convertInputToDomain(grupoUsuarioInput);
 		grupoUsuario = cadastroGrupoUsuarioService.salvar(grupoUsuario);
-		return grupoUsuarioModelAssembler.toModel(grupoUsuario);
+		return grupoUsuarioInputOutputConverter.convertDomainToOutput(grupoUsuario);
 	}
 
 	@DeleteMapping("/desassociar/{grupoId}")
@@ -69,6 +64,7 @@ public class GrupoUsuarioController {
 	public void desassociar(@PathVariable Long usuarioId, @PathVariable Long grupoId) {
 		cadastroPerfilUsuario.desassociarGrupo(usuarioId, grupoId);
 	}
+
 	
 	@PutMapping("/associar/{grupoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -78,18 +74,17 @@ public class GrupoUsuarioController {
 
 	
 	@PutMapping("/{grupoId}")
-	public GrupoUsuarioModel atualizar(@PathVariable Long grupoId,
-			@RequestBody @Valid GrupoUsuarioInput grupoInput) {
+	public GrupoUsuarioOutput atualizar(@PathVariable Long grupoId,
+			@RequestBody @Valid GrupoUsuarioInput grupoUsuarioInput) {
 		GrupoUsuario grupoUsuarioAtual = cadastroGrupoUsuarioService.buscarOuFalhar(grupoId);
-		grupoUsuarioInputDisassembler.copyToDomainObject(grupoInput, grupoUsuarioAtual);
+		grupoUsuarioInputOutputConverter.copyInputToDomain(grupoUsuarioInput, grupoUsuarioAtual);
 		grupoUsuarioAtual = cadastroGrupoUsuarioService.salvar(grupoUsuarioAtual);
-		return grupoUsuarioModelAssembler.toModel(grupoUsuarioAtual);
+		return grupoUsuarioInputOutputConverter.convertDomainToOutput(grupoUsuarioAtual);
 	}
-	
+
 	@DeleteMapping("/{grupoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long grupoId) {
 		cadastroGrupoUsuarioService.excluir(grupoId);	
 	}
-
 }

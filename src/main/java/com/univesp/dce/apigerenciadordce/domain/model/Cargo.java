@@ -3,13 +3,13 @@ package com.univesp.dce.apigerenciadordce.domain.model;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "CARGO")
 public class Cargo {
